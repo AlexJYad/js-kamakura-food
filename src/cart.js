@@ -24,21 +24,14 @@ function createCart(product) {
 function addToCart(productName) {
    const product = products.find((p) => p.name === productName);
    if (product) {
-      const cartProducts = document.querySelector("#cart-products");
-
-      //1. Удаляем заглушку (один раз)
+      const cartProducts = document.getElementById("cart-products");
       const placeholderItem = cartProducts.querySelector(".cart-container");
       const placeholderText = cartProducts.querySelectorAll("h3");
       placeholderText.forEach((text) => {
-         if (text.textContent === "Añade un plato") {
-            text.remove();
-         }
          if (text.textContent === "Añade un plato a tu menú") {
             text.remove();
-            placeholderItem.remove();
          }
       });
-
       // 2. Проверяем, есть ли уже этот продукт в корзине
       const productExists = cartProducts.querySelectorAll(".cart-container");
       let exist = false;

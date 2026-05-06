@@ -15,6 +15,8 @@ document.addEventListener("click", (e) => {
    const quantityContainer = e.target.closest(".quantity-container");
    const deleteBtn = e.target.closest(".close-button");
    const receipt = e.target.closest(".proceedPay-button");
+   const receiptCloseBtn = e.target.closest("#close-receipt");
+   const pagarBtn = e.target.closest("#pay-button");
 
    if (filterBtn) {
       const category = filterBtn.dataset.category;
@@ -23,12 +25,32 @@ document.addEventListener("click", (e) => {
       const productName = addBtn.dataset.name;
       addToCart(productName);
       cartTotalDisplay();
-   } else if (cartBtn) {
+   }
+
+   if (cartBtn) {
       const cart = document.getElementById("cart-container");
+      //1. Удаляем заглушку (один раз)
+      const cartProducts = document.getElementById("cart-products");
+      const placeholderItem = cartProducts.querySelector(".cart-container");
+      const placeholderText = cartProducts.querySelectorAll("h3");
+      placeholderText.forEach((text) => {
+         if (text.textContent === "Añade un plato") {
+            placeholderItem.remove();
+         }
+      });
+      cartTotalDisplay();
       cart.style.display = cart.style.display === "flex" ? "none" : "flex";
    }
 
-   if (deleteBtn) {
+   if (receiptCloseBtn) {
+      console.log("Cerrando recibo...");
+      const cart = document.getElementById("products-container");
+      cart.style.display = "flex";
+      const receiptContainer = document.getElementById("receipt-container");
+      receiptContainer.style.display = "none";
+   }
+
+   if (deleteBtn && !receiptCloseBtn) {
       const productName = deleteBtn
          .closest(".cart-container")
          .querySelector("h3").textContent;
@@ -59,8 +81,20 @@ document.addEventListener("click", (e) => {
    }
 
    if (receipt) {
-      if (cartTotal() > 0) {
-         displayReceipt();
+      const cart = document.getElementById("products-container");
+      cart.style.display = "none";
+      displayReceipt();
+   }
+
+   if (pagarBtn) {
+      if (cartTotal() === 0) {
+         const receiptContainer = document.getElementById("receipt-container");
+         receiptContainer.appendChild(
+            document.createTextNode("No hay productos en el carrito."),
+         );
+         receiptContainer.style.display = "flex";
+         return;
       }
+      alert("¡Gracias por tu compra!");
    }
 });
