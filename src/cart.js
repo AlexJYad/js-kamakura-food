@@ -1,2 +1,68 @@
 //DEBE contener las funcionalidades del carrito de compras.
 
+import { products } from "../assets/data/data.js";
+
+function createCart(product) {
+   const cartItem = document.createElement("div");
+   cartItem.classList.add("cart-container");
+
+   cartItem.innerHTML = `
+   <button class="close-button"><img src="./assets/img/close.svg" alt="close"></button>
+   <div class="text-container">
+      <h3>${product.name}</h3>
+      <h5>${product.price} €</h5>
+   </div>
+   <div class="quantity-container" id="quantity">
+      <button>+</button>
+      <p class="quantity">1</p>
+      <button>-</button>
+   </div>
+`;
+   return cartItem;
+}
+
+function addToCart(productName) {
+   const product = products.find((p) => p.name === productName);
+   if (product) {
+      const cartProducts = document.querySelector("#cart-products");
+
+      //1. Удаляем заглушку (один раз)
+      const placeholderItem = cartProducts.querySelector(".cart-container");
+      const placeholderText = cartProducts.querySelectorAll("h3");
+      placeholderText.forEach((text) => {
+         if (text.textContent === "Añade un plato") {
+            text.remove();
+         }
+         if (text.textContent === "Añade un plato a tu menú") {
+            text.remove();
+            placeholderItem.remove();
+         }
+      });
+
+      // 2. Проверяем, есть ли уже этот продукт в корзине
+      const productExists = cartProducts.querySelectorAll(".cart-container");
+      let exist = false;
+
+      if (productExists.length > 0) {
+         productExists.forEach((item) => {
+            const itemName = item.querySelector("h3").textContent;
+            if (itemName === product.name) {
+               const quantityElement = item.querySelector(".quantity");
+               let quantity = parseInt(quantityElement.textContent);
+               quantity++;
+               quantityElement.textContent = quantity;
+               exist = true;
+            }
+         });
+      }
+
+      // 3. Если продукта нет, добавляем его в корзину
+      if (!exist) {
+         cartProducts.appendChild(createCart(product));
+      }
+   } else {
+      console.log(`Producto no encontrado: ${productName}`);
+   }
+}
+
+export { addToCart };

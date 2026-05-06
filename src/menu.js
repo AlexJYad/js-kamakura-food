@@ -19,7 +19,6 @@ renderFilters(filters);
 //DEBE imprimir en pantalla los productos, con su Título, descripción y precio en € y botón de añadir.
 
 const container = document.querySelector("#products");
-console.log(container);
 
 function renderProducts(products) {
    container.innerHTML = products
