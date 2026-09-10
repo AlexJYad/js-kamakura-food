@@ -24,7 +24,7 @@ A menu page for a fictional Japanese restaurant, **Kamakura Food** — built to 
 
 The menu and category data already existed as ready-made arrays that couldn't be touched, so the whole point of the exercise was to render everything on screen *dynamically*: filters, dishes, and a working shopping cart, all driven purely by JavaScript logic reacting to that data.
 
-> This project started as a guided training exercise (forked from a course template) and was completed by me as part of my frontend development practice. The original assignment brief is kept in [`readme-task.md`](https://github.com/AlexJYad/js-kamakura-food/blob/main/readme-task.md) for reference.
+> This project started as a guided training exercise (forked from a course template) and was completed by me as part of my frontend development practice. The original assignment brief is kept in [`readme-task.md`](https://github.com/AlexJYad/js-kamakura-food/blob/main/README-task.md) for reference.
 
 ---
 
